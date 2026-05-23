@@ -1,0 +1,26 @@
+[Unit]
+Description=MCP Menu Server
+After=network-online.target
+
+[Container]
+Image=localhost/atareao/mcp-menus:latest
+ContainerName=mcp-menus
+PublishPort=3020:3020
+
+# Environment
+Environment=RUST_LOG=mcp_menus=info
+Environment=MENUS_DB_PATH=/data/menus.db
+Environment=MCP_TRANSPORT=http
+Environment=MCP_PORT=3020
+
+# Volumes
+Volume=/data/rust/mcp-menus/data:/data
+
+# Networks
+Network=traefik.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
